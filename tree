@@ -1,6 +1,7 @@
 .
 ├── Instructions
-├── Tree
+├── OpenMP_Offload_slides_kent_2025.pdf
+├── tree
 │
 ├── basics
 │   ├── 1_hello
