@@ -1,0 +1,31 @@
+
+This is a 90-minute OpenMP Offloading tutorial, presented at TACC.
+See OpenMP_Offload_slides_kent_2025.pdf slides file.
+Basic operations/concepts of code were explained in the presentation as
+attendees followed the slides, and the grammar/syntax review at after
+talking through the coded examples.
+(Non-tutorial viewers should read grammar/syntax text after 
+the code sections first, then peruse code.)
+
+The basics directory contains subdirectories of exercises prefixed
+with a number which recommends the order to work through the exercises.
+
+While you can simply perform the TODO_# comments in the codes to perform
+the basic offload feature(s), please read the README.md for additional
+things to try, and explanations about the features.  There are also question
+to help you think about and understand offloading behavior.
+
+See the solutions directory for the answers: 
+the OpenMP Offload coded programs and answers to the README.md questions.
+
+
+basics folder:
+Experiment with the tutorial examples in this order:
+   1_hello
+   2_calc
+   3_target_perf
+   4_simp_map
+   5_async
+
+
+advanced folder: will be included later.

@@ -1,0 +1,40 @@
+.
+├── Instructions
+├── Tree
+│
+├── basics
+│   ├── 1_hello
+│   │   ├── hello.c
+│   │   ├── hello.cpp
+│   │   ├── hello.F90
+│   │   ├── README.md
+│   │   └── solutions
+│   │       └── ...
+│   ├── 2_calc
+│   │   ├── README.md
+│   │   ├── solutions
+│   │   │   └── ...
+│   │   ├── sqrt.c
+│   │   └── sqrt.F90
+│   ├── 3_target_perf
+│   │   ├── axpy.c
+│   │   ├── axpy.F90
+│   │   ├── README.md
+│   │   └── solutions
+│   │       └── ...
+│   ├── 4_simp_map
+│   │   ├── data_region_update.c
+│   │   ├── data_region_update.F90
+│   │   ├── README.md
+│   │   └── solutions
+│   │       └── ...
+│   └── 5_async
+│       ├── async.c
+│       ├── async.F90
+│       ├── README.md
+│       ├── solutions
+│       │   └── ...
+│       ├── tasks.c
+│       └── tasks.F90
+│
+└── advanced (later)
