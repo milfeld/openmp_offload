@@ -1,4 +1,4 @@
-
+!!                                               Kent Milfeld 5/19/25
 program main
   use omp_lib
   integer,parameter :: NT=1024*1024

@@ -1,4 +1,4 @@
-
+!!                                               Kent Milfeld 5/19/25
 program main
    integer,parameter :: N=1024*1024
    double precision  :: v1(N), v2(N), p(N)

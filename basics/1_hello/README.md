@@ -66,3 +66,4 @@ Compile and run the simple OpenMP `hello(.c|.F90)` with/without offloading.
         $  ./a.out
 
     What happened?     ----
+=================================================================

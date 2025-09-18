@@ -1,3 +1,4 @@
+!!                                               Kent Milfeld 5/19/25
 program main
   integer, parameter :: N=1024*1024*8
   real :: TOL=1.0E-6, a=3.0, x(N)
