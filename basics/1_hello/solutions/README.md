@@ -28,6 +28,7 @@ Compile and run the simple OpenMP `hello(.c|.F90)` with/without offloading.
         $ nvc -fopenmp hello.c | nvfortran -fopenmp hello.F90
 
     Where did the code run? ____ HOST
+    How many devices did it see?  ____ 0
 
 3.)
  TODO2:
@@ -36,6 +37,7 @@ Compile and run the simple OpenMP `hello(.c|.F90)` with/without offloading.
     Compile with only the -fopenmp option.
 
     Where did the code run? ____ HOST
+    How many devices did it see?  ____ 0
 
     On HPC systems it runs on the host, as a fallback, 
     since no compiler offloading support is specified.
@@ -46,6 +48,7 @@ Compile and run the simple OpenMP `hello(.c|.F90)` with/without offloading.
         $  nvfortran -fopenmp -mp=gpu hello.F90
 
     Where did the binary run? ____ GPU
+    How many devices did it see?  ____ 1
                             
 5.) Now turn off offloading with the OMP_TARGET_OFFLOAD variable.
 
@@ -53,6 +56,9 @@ Compile and run the simple OpenMP `hello(.c|.F90)` with/without offloading.
         $  ./a.out
 
     Where did it run?  ____ HOST
+    How many devices did it see?  ____ 0
+
+        $ unset OMP_TARGET_OFFLOAD  # ***** TO ALLOW OFLLOADING LATER
 
   EXTRA
     ON A LOGIN node (without OMP_TARGET_OFFLOAD set)
@@ -60,6 +66,7 @@ Compile and run the simple OpenMP `hello(.c|.F90)` with/without offloading.
         $ ./a.out
 
     Where did it run?  ____ HOST !
+    How many devices did it see?  ____ 0
 
     Now, set offloading to mandatory and run:
 

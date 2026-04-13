@@ -10,8 +10,9 @@ Offload axpy loop, `axpy(.c|.F90)`.
     It times the axpy on the host, and on the gpu.
 
     TODO_1-3
-    Workshare the host loops with parallel for; the axpy loop is timed.
-    Insert target teams distribute parallel for as described in TODO_1
+    Workshare the host loops with "parallel for"; the axpy loop is timed.
+
+    Insert "target teams distribute parallel for" as described in TODO_1
     
     Capture the performance for these compilers: nvidia and gcc
 

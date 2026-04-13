@@ -13,10 +13,10 @@ Offload square root calculations, `sqrt(.c|.F90)`.
     Is there a separate logical unit in the SM for square root?
     ____
 
-    So, floating point units perform the square root operations.
 
 2.) Insert OpenMP directives as described by TODO_1 and TODO_2,
-    to execute the code on the GPU.
+    to execute the code on the GPU. Note: this code only 
+    executes on a single thread.
 
         $ nvc       -fopenmp -mp=gpu sqrt.c   -lm -O3
         $ nvfortran -fopenmp -mp=gpu sqrt.F90 -lm -O3

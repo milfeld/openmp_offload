@@ -10,8 +10,8 @@ Offload axpy loop, `axpy(.c|.F90)`.
     It times the axpy on the host, and on the gpu.
 
     TODO_1-3
-    Workshare the host loops with parallel for; the axpy loop is timed.
-    Insert target teams distribute parallel for as described in TODO_1
+    Workshare the host loops with  "parallel for"; the axpy loop is timed.
+    Insert "target teams distribute parallel for" as described in TODO_1
     
     Capture the performance for these compilers: nvidia and gcc
 
@@ -33,10 +33,11 @@ Offload axpy loop, `axpy(.c|.F90)`.
       $ export OMP_NUM_THREADS=72 (for host axpy)
       $ ./a.out   #record the GPU time below
 
+                           C                F90
            Compiler  HOST     GPU
-      ---- NVIDIA    0.0410  0.0018
-      ---- GCC       0.0437  0.0199
-      ---- LLVM      0.0155  0.0063 
+      ---- NVIDIA    0.0410  0.0014       0.0444   0.0014
+      ---- GCC       0.0437  0.0199       0.0435   0.0200 
+      ---- LLVM      0.0155  0.0063       ------   ------
 
       Note:  if you recompile with target teams distribute parallel for simd
              You will get the same times, except GCC offload improves by 5 x:
@@ -57,12 +58,12 @@ Offload axpy loop, `axpy(.c|.F90)`.
     Repeat the module loading, compiling and execution in 1.)
 
     Report the timings:
+                         GPU                     GPU
          compiler    target teams              target teams  TTDPF simd
                      distribute parallel for   loop
                      performance (sec)
-         gcc         0.01987                    0.00430      0.00440
-         nvidi       0.00175                    0.00175      0.00173
-         llvm        0.00065                    0.00065      0.00065
+         nvidi       0.0014                    0.0014       ------
+         gcc         0.0199                    0.0043       ------
     
 3.) Run anyone compiled version with OMP_NUM_THREADS=1.
     How much slower is the HOST execution with 1 thread, compared to 72?
@@ -102,4 +103,4 @@ Offload axpy loop, `axpy(.c|.F90)`.
       $  ./a.out   
 
     Which number is optimal, 512, or 1024?
-      ---- 1024
+      ---- 1024 (result for early Vista (GH) runs)

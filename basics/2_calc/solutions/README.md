@@ -8,19 +8,19 @@ Offload square root calculations, `sqrt(.c|.F90)`.
 1.) Look over the code.
     What is the basic mathematical operation in function fun() 
     and the code block?
-    ____
+    ____  sqrt
 
     Is there a separate logical unit in the SM for square root?
-    ____
+    ____ yes in a Special Function Units (SFU)
 
-    So, floating point units perform the square root operations.
 
 2.) Insert OpenMP directives as described by TODO1 and TODO2 code comments.
+    Note: this code only executes on a single thread.
 
         $ nvc       -fopenmp -mp=gpu sqrt.c   -lm -O3
         $ nvfortran -fopenmp -mp=gpu sqrt.F90 -lm -O3
 
-    Time the execution with the built-in timer command:
+    Time the execution with the shell built-in timer command:
 
           time ./a.out
 
@@ -31,16 +31,17 @@ Offload square root calculations, `sqrt(.c|.F90)`.
 
         $ time ./a.out    # You can abort if you get impatient.
 
-    Time the execution with the built-in timer command:
+    Time the execution with the shell built-in timer command:
 
           time ./a.out
 
     Was there a difference in performance with the NVIDIA compiler?
      
      
-    time -O3  ---- ~ 1.5sec
-    time nopt ---- ~ 1.5sec
-    --- Offload optimization is performed even when -O3 is not specified.
+    time -O3  ---- ~ 0.050s c-code   ~0.096s   !0.025  F90-code
+    time nopt ---- ~ 0.075s c-code   ~0.025s  F90-code
+    --- Compiler optimization (-O3) can make a difference, particularly
+        when the GCC compilers are used.
 
 3.) Compare the time for the gcc compiler WITH and WITHOUT the -O3 option.
 
@@ -58,13 +59,9 @@ Offload square root calculations, `sqrt(.c|.F90)`.
 
     How much fast is the -O3 code than non-optimized code?
          
-    C code
-    time -O3  ----   2.2 sec
-    time nopt ----  41.4 sec 20x slower
-
-    Fortran
-    time -O3  ----   1.5 sec
-    time nopt ----   2.8 sec ~2x slower
+    C code and Fortran code
+    time -O3  ----   0.050s
+    time nopt ----   0.150s  #this us to be 40x slower
 
     **** change back to nvidia compilers:
 
