@@ -38,10 +38,9 @@ Offload square root calculations, `sqrt(.c|.F90)`.
     Was there a difference in performance with the NVIDIA compiler?
      
      
-    time -O3  ---- ~ 0.050s c-code   ~0.096s   !0.025  F90-code
-    time nopt ---- ~ 0.075s c-code   ~0.025s  F90-code
-    --- Compiler optimization (-O3) can make a difference, particularly
-        when the GCC compilers are used.
+    time -O3  ---- ~ 1.18s c-code   ~0.65   F90-code
+    time nopt ---- ~ 1.18s c-code   ~0.65s  F90-code
+    --- Compiler optimization (-O3) doesn't make a difference with NVHPC compilers.
 
 3.) Compare the time for the gcc compiler WITH and WITHOUT the -O3 option.
 
@@ -57,11 +56,14 @@ Offload square root calculations, `sqrt(.c|.F90)`.
         $ gcc      -fopenmp -foffload=nvptx-none sqrt.c   -lm
         $ gfortran -fopenmp -foffload=nvptx-none sqrt.F90 -lm
 
+
     How much fast is the -O3 code than non-optimized code?
          
-    C code and Fortran code
-    time -O3  ----   0.050s
-    time nopt ----   0.150s  #this us to be 40x slower
+                    C code  Fortran code
+    time -O3  ----   1.60s  0.95s
+    time nopt ----  44.0s   2.35s
+
+    --- Compiler optimization (-O3) does make a difference with NVHPC compilers.
 
     **** change back to nvidia compilers:
 
