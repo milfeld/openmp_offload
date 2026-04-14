@@ -1,4 +1,3 @@
-//                                               Kent Milfeld 5/19/25
 #include <stdio.h>
 #include <time.h>
 #include <omp.h>
@@ -13,9 +12,11 @@ int main(){
   for( int i=0; i<N; i++){ x[i]=i; y[i]=i;}
 
 // USE 1 GPU and multiple executions with MPS
-// TODO_1 assign ndev to some small number (e.g. 3)
+// TODO_1 remove the next line and 
+//        assign ndev to some small number (e.g. 4)
   ndev=omp_get_num_devices();
   n = N/ndev;
+  if ( N != (N/ndev)*ndev ) return 1;  // N%ndev==0
 
 // TODO_2 remove the parallel and master regions
 //        Just throw the tasks on the queue

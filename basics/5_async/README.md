@@ -16,10 +16,10 @@ code with OpenMP constructs to offload the
 sections asynchronously (with a nowait clause
 and a taskwait contruct).
 
-For Vista, we show how to modify the program (in 2. below)
-to offload multiple sections to the single Hopper GPU.
+For Vista gh  nodes use the async.c/F90 code and go to 2.)
+For multi-GPU nodes use the tasks.c/F90 code and go to 1.)
  
-1.) Look over the axpy.c/F90 code.  
+1.) Look over the async.c/F90 code.  
     The code calls omp_get_num_devices() to obtain the number of gpus 
     (ndev), and divides N (number of elments in the AXPY algorithm)
     for partitioning the sections (N/ndev iterations) among the GPUs.
@@ -44,7 +44,7 @@ to offload multiple sections to the single Hopper GPU.
      USE tasks.c/F90.
 
 
-     TODO_1  Hard set ndev to a small integer (e.g. 3)
+     TODO_1  Hard code ndev to a small integer (e.g. 4)
      TODO_2  Remove the parallel and master constructs.
      TODO_3  Change device(id) to device(0) so that only
              the single Vista GPU (id=0) is used.

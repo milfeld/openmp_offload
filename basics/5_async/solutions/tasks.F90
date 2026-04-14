@@ -9,10 +9,13 @@ program main
   do i=1,NT; x(i)=i; y(i)=i; enddo
 
 !! USE 1 GPU and multiple executions with MPS
-!! TODO_1 assign ndev to some small number (e.g. 3)
-  ndev=omp_get_num_devices()
-  ndev=3
+!! TODO_1 remove the next line and 
+!!        assign ndev to some small number (e.g. 4)
+  !!ndev=omp_get_num_devices()
+  ndev=4
   n = NT/ndev
+
+  if ( N /= (N/ndev)*ndev ) stop 1;  ! modulo(n,ndev)==0
 
 
 !! TODO_2 remove the parallel and master regions
