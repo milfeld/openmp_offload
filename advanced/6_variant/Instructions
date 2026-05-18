@@ -1,0 +1,38 @@
+
+Look over the dev_or_host_variant.c code and note:
+
+1.) fun() is called 2 times. It is in the dispatch
+    construct the second time.
+
+2.) In the code blocks above main(), fun() is defined and is
+    immediately preceeded by a declare_variant directive that
+    specifies that the d_fun() function replaces fun() if it is in
+    a dispatch (construct), which is the case for the second
+    call to fun() in main.  The d_fun() executes a print
+    statement on the default device through the target construct.
+
+3.) The d_fun() is enclosed by a beginning and ending declare_target
+    directive. (If the functions are defined in a different
+    program compilation unit is necessary to provide this OpenMP
+    declaration.)
+
+4.) In C code, a forward defining prototype for d_fun() is required 
+    since the declare_variant specifies the function as the 
+    variant before it is defined.
+
+TODO:
+a.) Change the code, replacing the dispatch directive to a parallel
+    construct that executes fun() twice (with 2 threads).  What is
+    necessary in the declare_variant to have the d_fun() replaces
+    to occur for fun() in a parallel construct.
+
+Look over the saxpy.c code.
+
+1.) The following saxpy.c code uses the same variant method shown in dev_or_host_variant.c.
+    Moreover it requires mapping data to the device.  In many cases, storage is often
+    made persistent though out many GPU offloads. The target_data in main()
+    makes x and y data persistent throughout target_data region (block), by
+    mapping array sections of the x and y pointers.
+
+2.) Note, the use_device_ptr(x,y) cause instructs the d_saxpy() function to
+    use the device pointers in the arguments.
