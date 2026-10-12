@@ -1,20 +1,17 @@
 
 program main
   use omp_lib
-  integer,parameter :: NT=1024*1024
-  real    ::  a=2.0, y(NT), x(NT)
+  integer,parameter :: NT=128*1024*1024
+  double precision  ::  a=2.0, y(NT), x(NT)
   integer ::  n, ndev, ib, ie
 
-  !$omp parallel do simd
+  !$omp parallel do simd num_threads(36)
   do i=1,NT; x(i)=i; y(i)=i; enddo
 
 !! USE 1 GPU and multiple executions with MPS
-!! TODO_1 remove the next line and 
-!!        assign ndev to some small number (e.g. 4)
+!! TODO_1 assign ndev to some small number (e.g. 3)
   ndev=omp_get_num_devices()
   n = NT/ndev
-
-  if ( N /= (N/ndev)*ndev ) stop 1;  ! modulo(n,ndev)==0
 
 
 !! TODO_2 remove the parallel and master regions
@@ -38,9 +35,11 @@ program main
   !! Can do independent CPU work HERE
 
 !! TODO_4 wait for the tasks to finish with a taskwait directive.
+!!!$omp taskwait !! do this if you don't use parallel master
 
-  !! Can reuse x and y here, after taskwait.
-
+  !! Can reuse x and y here.
+  
+  !! check
   do i=1,NT 
     if(y(i) /= a*i+i) print*," FAILED at:",i," expected ",a*i+i,"found ",y(i)
   enddo

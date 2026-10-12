@@ -8,21 +8,22 @@ the execution of simultaneous offloads
 (of the AXPY sections) to multiple GPUs.
 (Most systems have have more than 1 GPU/node.)
 
-Vista only has 1 GPU. Nevertheless, the
-code was designed to work even for a single GPU.
+The code was designed to work even for a single GPU
+system, just to illustrate the algorithm,
+so it will work on Vista using only 1 GPU.
 
-Regardless, it is instructive to instrument the
-code with OpenMP constructs to offload the
-sections asynchronously (with a nowait clause
-and a taskwait contruct).
+Regardless of the system, it is instructive to 
+learn how the algorithm works, using OpenMP 
+constructs to offload the sections asynchronously 
+(with a nowait clause and a taskwait contruct).
 
-For Vista gh  nodes use the async.c/F90 code and go to 2.)
-For multi-GPU nodes use the tasks.c/F90 code and go to 1.)
+For Vista, we show how to modify the program (in 2. below)
+to offload multiple sections to the single Hopper GPU.
  
-1.) Look over the async.c/F90 code.  
+1.) Look over the axpy.c/F90 code.  
     The code calls omp_get_num_devices() to obtain the number of gpus 
-    (ndev), and divides N (number of elments in the AXPY algorithm)
-    for partitioning the sections (N/ndev iterations) among the GPUs.
+    (ndev), and divides into N (number of elments in the AXPY algorithm)
+    to partition chunks of N/ndev iterations iterations among the GPUs.
 
     Set up asynchronous execution following
     TODO_1, TODO_2, and TODO_3 instructions (in the comments).  
@@ -44,7 +45,7 @@ For multi-GPU nodes use the tasks.c/F90 code and go to 1.)
      USE tasks.c/F90.
 
 
-     TODO_1  Hard code ndev to a small integer (e.g. 4)
+     TODO_1  Hard set ndev to a small integer (e.g. 3)
      TODO_2  Remove the parallel and master constructs.
      TODO_3  Change device(id) to device(0) so that only
              the single Vista GPU (id=0) is used.
@@ -69,20 +70,31 @@ For multi-GPU nodes use the tasks.c/F90 code and go to 1.)
 
       ---- 
 
-=================================================================
 
-Other Information:  how to run multiple processes simultaneously
-                    with MPS
-     Using MPS has shown to be effective in running
-     multiple executables (such as amber) simultaneously.
+3.) Use MPS to run tasks multiple processes simultaneously
 
-      $  export CUDA_MPS_PIPE_DIRECTORY=`pwd`/MPS_log
-      $  export CUDA_MPS_LOG_DIRECTORY=`pwd`/MPS_log
-      $  export CUDA_VISIBLE_DEVICES=0
-      $  export CUDA_DEVICE_MAX_CONNECTIONS=3
-      $  nvidia-cuda-mps-control -d
+     Using MPS to overlap task (process) executions has
+     be shown to more efficient, than running the tasks serially.
 
-      $  ./a.out &
-      $  ./a.out &
-      $  wait
-=================================================================
+         export CUDA_MPS_PIPE_DIRECTORY=`pwd`/MPS_log
+         export CUDA_MPS_LOG_DIRECTORY=`pwd`/MPS_log
+         export CUDA_VISIBLE_DEVICES=0
+         export CUDA_DEVICE_MAX_CONNECTIONS=3
+         nvidia-cuda-mps-control -d
+
+         ./a.out
+
+Try this with tasks.c/F90.
+  1.)  Comment out the checking and PASSED statements in tasks.c/F90.
+       (For float precision, accuracy will vary in 6th digit.
+        Or try with double.)
+     non-MPS time:
+     ______ 
+
+
+  3.)  Execute the above export and nvidia control statements, 
+       then execute the tasks.c/F90 executable (a.out).
+     MPS:
+     ______ 
+     ercentage difference MPS vs non-MPS   _____ 
+

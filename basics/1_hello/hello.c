@@ -1,4 +1,3 @@
-//                                               Kent Milfeld 5/19/25
 #include <stdio.h>
 
 // TODO 1: Add appropriate header file for OMP functions & parameters

@@ -14,8 +14,7 @@ Compile and run the simple OpenMP `hello(.c|.F90)` with/without offloading.
 
 2.) Compile the code, AS IS, without any openmp support.
 
-        $  nvc   hello.c    |  nvfortran hello.F90
-        $  nvc++ hello.cpp
+        $  nvc hello.c  |  nvfortran hello.F90
 
     What is the problem?
     Hint:  OMP functions need prototypes.
@@ -25,11 +24,9 @@ Compile and run the simple OpenMP `hello(.c|.F90)` with/without offloading.
     inserting header (for C/C++) or use statement (for F90).
     Compile with JUST openmp compiler support (-fopenmp) and run.
                    
-        $ nvc   -fopenmp hello.c   | nvfortran -fopenmp hello.F90
-        $ nvc++ -fopenmp hello.cpp
+        $ nvc -fopenmp hello.c | nvfortran -fopenmp hello.F90
 
     Where did the code run? ____
-    How many devices did it see?  ____ 
 
 3.)
  TODO2:
@@ -38,7 +35,6 @@ Compile and run the simple OpenMP `hello(.c|.F90)` with/without offloading.
     Compile with only the -fopenmp option.
 
     Where did the code run? ____
-    How many devices did it see?  ____ 
 
     On HPC systems it runs on the host, as a fallback, 
     since no compiler offloading support is specified.
@@ -49,18 +45,15 @@ Compile and run the simple OpenMP `hello(.c|.F90)` with/without offloading.
         $  nvfortran -fopenmp -mp=gpu hello.F90
 
     Where did the binary run? ____
-    How many devices did it see?  ____ 
                             
 5.) Now turn off offloading with the OMP_TARGET_OFFLOAD variable.
 
         $  export OMP_TARGET_OFFLOAD=disabled
         $  ./a.out
 
-        $ unset OMP_TARGET_OFFLOAD  # ***** TO ALLOW OFLLOADING LATER
-
     Where did it run?  ____
-    How many devices did it see?  ____ 
 
+    DON'T FORGET remove OMP_TARGET_OFFLOAD:  unset OMP_TARGET_OFFLOAD
 
   EXTRA
     ON A LOGIN node (without OMP_TARGET_OFFLOAD set)
@@ -75,5 +68,3 @@ Compile and run the simple OpenMP `hello(.c|.F90)` with/without offloading.
         $  ./a.out
 
     What happened?     ----
-
-=================================================================

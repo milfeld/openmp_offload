@@ -8,19 +8,19 @@ Offload square root calculations, `sqrt(.c|.F90)`.
 1.) Look over the code.
     What is the basic mathematical operation in function fun() 
     and the code block?
-    ____  sqrt
+    ____
 
     Is there a separate logical unit in the SM for square root?
-    ____ yes in a Special Function Units (SFU)
+    ____
 
+    So, floating point units perform the square root operations.
 
 2.) Insert OpenMP directives as described by TODO1 and TODO2 code comments.
-    Note: this code only executes on a single thread.
 
         $ nvc       -fopenmp -mp=gpu sqrt.c   -lm -O3
         $ nvfortran -fopenmp -mp=gpu sqrt.F90 -lm -O3
 
-    Time the execution with the shell built-in timer command:
+    Time the execution with the built-in timer command:
 
           time ./a.out
 
@@ -31,16 +31,16 @@ Offload square root calculations, `sqrt(.c|.F90)`.
 
         $ time ./a.out    # You can abort if you get impatient.
 
-    Time the execution with the shell built-in timer command:
+    Time the execution with the built-in timer command:
 
           time ./a.out
 
     Was there a difference in performance with the NVIDIA compiler?
      
      
-    time -O3  ---- ~ 1.18s c-code   ~0.65   F90-code
-    time nopt ---- ~ 1.18s c-code   ~0.65s  F90-code
-    --- Compiler optimization (-O3) doesn't make a difference with NVHPC compilers.
+    time -O3  ---- ~ 1.5sec
+    time nopt ---- ~ 1.5sec
+    --- Offload optimization is performed even when -O3 is not specified.
 
 3.) Compare the time for the gcc compiler WITH and WITHOUT the -O3 option.
 
@@ -56,14 +56,15 @@ Offload square root calculations, `sqrt(.c|.F90)`.
         $ gcc      -fopenmp -foffload=nvptx-none sqrt.c   -lm
         $ gfortran -fopenmp -foffload=nvptx-none sqrt.F90 -lm
 
-
     How much fast is the -O3 code than non-optimized code?
          
-                    C code  Fortran code
-    time -O3  ----   1.60s  0.95s
-    time nopt ----  44.0s   2.35s
+    C code
+    time -O3  ----   2.2 sec
+    time nopt ----  41.4 sec 20x slower
 
-    --- Compiler optimization (-O3) does make a difference with NVHPC compilers.
+    Fortran
+    time -O3  ----   1.5 sec
+    time nopt ----   2.8 sec ~2x slower
 
     **** change back to nvidia compilers:
 

@@ -1,4 +1,3 @@
-//                                               Kent Milfeld 5/19/25
 #include <stdio.h>
 #define N 1024*1024
 int main(){
